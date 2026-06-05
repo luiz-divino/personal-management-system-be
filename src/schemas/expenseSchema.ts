@@ -1,0 +1,25 @@
+import { z } from "zod";
+export const createExpenseSchema = z.object({
+    body: z.object({
+        description: z.string().min(1, "Description is required"),
+        amount: z.coerce.number().positive("Amount must be a positive number"),
+        date: z.string().optional(),
+        category: z.string().min(1, "Category is required"),
+    }),
+});
+
+export const listExpenseSchema = z.object({
+    query: z.object({
+        category: z
+            .string()
+            .trim()
+            .min(1, "Category cannot be empty")
+            .optional(),
+        search: z.string().trim().min(1, "Search cannot be empty").optional(),
+        page: z.coerce.number().int().positive().optional(),
+        limit: z.coerce.number().int().positive().max(100).optional(),
+    }),
+});
+
+export type createExpenseSchemaType = typeof createExpenseSchema;
+export type listExpenseSchemaType = typeof listExpenseSchema;
