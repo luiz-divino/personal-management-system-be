@@ -54,12 +54,13 @@ router.post(
     asyncHandler(authUserController.handle.bind(authUserController)),
 );
 
-// delete meu usuario
+// deletar a propria conta
 router.delete(
-    "/me",
+    "/users/me",
     isAuthenticated,
     asyncHandler(deleteUserController.handle.bind(deleteUserController)),
 );
+
 
 // criar uma tarefa
 router.post(
