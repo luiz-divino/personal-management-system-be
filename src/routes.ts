@@ -20,10 +20,12 @@ import {
     createExpenseSchema,
     deleteExpenseSchema,
     listExpenseSchema,
+    updateExpenseSchema,
 } from "./schemas/expenseSchema.js";
 import { CreateExpenseController } from "./controllers/expense/CreateExpenseController.js";
 import { ListExpenseController } from "./controllers/expense/ListExpenseController.js";
 import { DeleteExpenseController } from "./controllers/expense/DeleteExpenseController.js";
+import { updateExpenseController } from "./controllers/expense/UpdateExpenseController.js";
 
 const router = Router();
 const createUserController = new CreateUserController();
@@ -103,6 +105,13 @@ router.get(
     validateSchema(listExpenseSchema),
     isAuthenticated,
     asyncHandler(listExpenseController.handle.bind(listExpenseController)),
+);
+
+router.patch(
+    "/expenses/:expenseId",
+    validateSchema(updateExpenseSchema),
+    isAuthenticated,
+    asyncHandler(updateExpenseController.handle.bind(updateExpenseController)),
 );
 
 router.delete(
